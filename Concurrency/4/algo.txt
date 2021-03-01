@@ -1,0 +1,44 @@
+------------------------------------------ Q4
+Switch :
+	count = 0
+	mutex
+	
+	lock(sem):
+		mutex.lock()
+		count++
+		if count == 1:
+			sem.wait()
+		mutex.unlock()
+	
+	unlock(sem):
+		mutex.lock()
+		count--
+		if count == 0 :
+			sem.signal()
+		mutex.unlock()
+
+
+Semaphore reader(1)
+Semaphore writer(1)
+Switch readswitch
+Switch writeswitch
+
+3 2 1w
+
+ReaderThread:
+	reader.wait()
+		readswitch.lock(writer)
+	reader.signal()
+	
+	# Read here
+	
+	readswitch.unlock(writer)
+
+WriterThread:
+	writeSwitch.lock(reader)
+	writer.wait()
+		# Write here
+	writer.signal()
+	writeSwitch.unlock(reader)
+
+------------------------------------------ Q4

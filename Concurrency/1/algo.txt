@@ -1,0 +1,12 @@
+Proc A :
+    procB.wait()
+    procA.signal()
+    increment()
+
+Proc B :
+    procA.wait()
+    procB.signal()
+    increment()
+
+procA = Semaphore(1)
+procB = Semaphore(0)
